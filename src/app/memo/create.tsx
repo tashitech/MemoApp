@@ -1,16 +1,19 @@
 import { View, TextInput, KeyboardAvoidingView, StyleSheet } from 'react-native';
-import Header from '../../components/Header';
+import { router } from 'expo-router';
 import CircleButton from '../../components/CircleButton';
 import { Feather } from '@expo/vector-icons';
+
+const handlePress = (): void => {
+  router.back()
+}
 
 const Create = () => {
   return (
     <KeyboardAvoidingView behavior='height' style={styles.container}>
-      <Header />
       <View style={styles.inputContainer}>
         <TextInput multiline style={styles.input} value='' />
       </View>
-      <CircleButton>
+      <CircleButton onPress={handlePress}>
         <Feather name='check' size={40} />
       </CircleButton>
     </KeyboardAvoidingView>

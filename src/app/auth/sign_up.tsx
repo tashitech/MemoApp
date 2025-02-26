@@ -1,21 +1,27 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
+import { Link, router } from 'expo-router';
+
+const handlePress = (): void => {
+  // 会員登録
+  router.push('/memo/list')
+}
 
 const SignUp = (): JSX.Element => {
   return (
     <View style={styles.container}>
-      <Header />
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
         <TextInput value=""  style={styles.input}/>
         <TextInput value="" style={styles.input} />
-        <Button label='Submit' />
+        <Button label='Submit' onPress={handlePress} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered?</Text>
-          <TouchableOpacity>
-            <Text style={styles.footerLink}>Log in.</Text>
-          </TouchableOpacity>
+          <Link href='/auth/log_in' asChild>
+            <TouchableOpacity>
+              <Text style={styles.footerLink}>Log in.</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </View>

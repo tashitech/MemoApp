@@ -1,9 +1,14 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import AntDesign from '@expo/vector-icons/AntDesign';
+
+const handlePress = (): void => {
+  router.push('/memo/detail')
+}
 
 const MemoListItem = (): JSX.Element => {
   return (
-    <View style={styles.memoListItem}>
+    <TouchableOpacity onPress={handlePress} style={styles.memoListItem}>
       <View>
         <Text style={styles.memoListItemTitle}>買い物リスト</Text>
         <Text style={styles.memoListItemDate}>2025/02/20 12:00</Text>
@@ -11,7 +16,7 @@ const MemoListItem = (): JSX.Element => {
       <TouchableOpacity>
         <AntDesign name="close" size={24} color="gray" />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   )
 }
 
