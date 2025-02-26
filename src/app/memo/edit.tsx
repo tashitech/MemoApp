@@ -7,7 +7,7 @@ const handlePress = (): void => {
   router.back()
 }
 
-const Edit = () => {
+const Edit = (): JSX.Element => {
   return (
     <KeyboardAvoidingView behavior='height' style={styles.container}>
       <View style={styles.inputContainer}>

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
 import Button from '../../components/Button';
 import { Link, router } from 'expo-router';
-import { useState } from 'react';
 
 const handlePress = (): void => {
   // 会員登録
