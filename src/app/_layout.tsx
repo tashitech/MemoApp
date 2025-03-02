@@ -6,8 +6,8 @@ const Layout = (): JSX.Element => {
       backgroundColor: '#467FD3'
     },
     headerTintColor: '#fff',
-    headerTitle: 'Memo App',
-    headerBackTitle: '戻る',
+    headerTitle: '関西風メモアプリ',
+    headerBackTitle: '戻るで？',
     headerTitleStyle: {
       fontSize: 22,
       fontWeight: 'bold'

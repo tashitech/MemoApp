@@ -25,7 +25,7 @@ const LogIn = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
-        <Text style={styles.title}>Log In</Text>
+        <Text style={styles.title}>ログイン</Text>
         <TextInput
           value={email}
           style={styles.input}
@@ -44,12 +44,12 @@ const LogIn = (): JSX.Element => {
           placeholder='Password'
           textContentType='password'
         />
-        <Button label='Submit' onPress={() => {handlePress(email, password)}} />
+        <Button label='ログイン' onPress={() => {handlePress(email, password)}} />
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Not registered?</Text>
+          <Text style={styles.footerText}>まだ会員登録してない?</Text>
           <Link href='/auth/sign_up' asChild replace>
             <TouchableOpacity>
-              <Text style={styles.footerLink}>Sign up here!</Text>
+              <Text style={styles.footerLink}>登録はここからやで！</Text>
             </TouchableOpacity>
           </Link>
         </View>

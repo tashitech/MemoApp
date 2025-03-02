@@ -1,14 +1,34 @@
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { router } from "expo-router";
+import { Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Link } from "expo-router";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { type Memo } from "../../types/memo";
-
-const handlePress = (): void => {
-  router.push('/memo/detail')
-}
+import { auth, db } from "../config";
+import { deleteDoc, doc } from "firebase/firestore";
 
 interface Props {
   memo: Memo
+}
+
+const handlePress = (id: string): void => {
+  if (auth.currentUser === null) { return }
+  const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, id)
+  Alert.alert('削除しますか？', 'よろしいですか？', [ 
+    {
+      text: 'キャンセル',
+      style: 'cancel'
+    },
+    {
+      text: '削除する',
+      style: 'destructive',
+      onPress: () => {
+        deleteDoc(ref)
+          .catch(() => {
+            Alert.alert('削除に失敗しました')
+          }
+        )
+      }
+    }
+  ])
 }
 
 const MemoListItem = (props: Props): JSX.Element | null => {
@@ -17,15 +37,20 @@ const MemoListItem = (props: Props): JSX.Element | null => {
   if (bodyText === null || updatedAt === null) { return null;}
   const dateString = updatedAt.toDate().toLocaleString('ja-JP')
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.memoListItem}>
-      <View>
-        <Text numberOfLines={1} style={styles.memoListItemTitle}>{bodyText}</Text>
-        <Text style={styles.memoListItemDate}>{dateString}</Text>
-      </View>
-      <TouchableOpacity>
-        <AntDesign name="close" size={24} color="gray" />
+    <Link
+      href={{ pathname: '/memo/detail', params: { id: memo.id } }}
+      asChild
+    >
+      <TouchableOpacity style={styles.memoListItem}>
+        <View>
+          <Text numberOfLines={1} style={styles.memoListItemTitle}>{bodyText}</Text>
+          <Text style={styles.memoListItemDate}>{dateString}</Text>
+        </View>
+        <TouchableOpacity onPress={() => {handlePress(memo.id)}}>
+          <AntDesign name="close" size={24} color="gray" />
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
+    </Link>
   )
 }
 

@@ -1,27 +1,45 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import CircleButton from '../../components/CircleButton';
+import { useEffect, useState } from 'react';
+import { auth, db } from '../../config';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { Memo } from '../../../types/memo';
 
-const handlePress = (): void => {
-  router.push('/memo/edit')
+const handlePress = (id: string): void => {
+  router.push({pathname: '/memo/edit', params: { id }})
 }
 
 const Detail = (): JSX.Element => {
+  const [memo, setMemo] = useState<Memo | null>(null);
+  const id = String(useLocalSearchParams().id);
+  console.log(id)
+  useEffect(() => {
+    if (auth.currentUser === null) {return}
+    const ref = doc(db, `users/${auth.currentUser.uid}/memos/`, id)
+    const unsubscribe = onSnapshot(ref, (memoDoc) => {
+        const { bodyText, updatedAt } = memoDoc.data() as Memo;
+        setMemo({
+          id: memoDoc.id,
+          bodyText,
+          updatedAt
+        })
+      })
+      return unsubscribe
+    }, [])
   return (
     <View style={styles.container}>
       <View style={styles.memoHeader}>
-        <Text style={styles.memoTitle}>買い物リスト１</Text>
-        <Text style={styles.memoDate}>2025年2月1日 12:00</Text>
+        <Text numberOfLines={1} style={styles.memoTitle}>{memo?.bodyText}</Text>
+        <Text style={styles.memoDate}>{memo?.updatedAt.toDate().toLocaleString('ja-JP')}</Text>
       </View>
       <ScrollView style={styles.memoBody}>
         <Text style={styles.memoBodyText}>
-          今日の買い物のリスト
-          高タンパク質・低カロリーな夕食を作りたいので、鶏胸肉・ブロッコリーは必須です。
-          忘れないように！
+          {memo?.bodyText}
         </Text>
       </ScrollView>
-      <CircleButton onPress={handlePress} style={{top: 60, bottom: 'auto'}}>
+      <CircleButton onPress={() => {handlePress(id)}} style={{top: 60, bottom: 'auto'}}>
         <Feather name="edit-2" size={30} />
       </CircleButton>
     </View>
@@ -52,13 +70,13 @@ const styles = StyleSheet.create({
     lineHeight: 16
   },
   memoBody: {
-    paddingVertical: 32,
     paddingHorizontal: 27
   },
   memoBodyText: {
     color: '#000',
     fontSize: 16,
-    lineHeight: 24
+    lineHeight: 24,
+    paddingVertical: 32
   }
 })
 
