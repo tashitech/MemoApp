@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { router, useNavigation } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
@@ -43,9 +43,10 @@ const List = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <View>
-        {memos.map((memo) => <MemoListItem key={memo.id} memo={memo} /> )}
-      </View>
+      <FlatList 
+        data={memos}
+        renderItem={({ item }) => <MemoListItem memo={item} />}
+      />
       <CircleButton onPress={handlePress}>
         <Feather name="plus" size={40} />
       </CircleButton>
