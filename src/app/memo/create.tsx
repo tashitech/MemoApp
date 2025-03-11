@@ -34,7 +34,9 @@ const Create = (): JSX.Element => {
           multiline
           style={styles.input}
           value={bodyText}
+          placeholder='メモを入力'
           onChangeText={(text) => {setBodyText(text)}}
+          autoCapitalize="none"
           autoFocus
         />
       </View>

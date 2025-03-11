@@ -4,7 +4,7 @@
     "slug": "関西風メモアプリ",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/memo_app_icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.example.memoapp",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.example.memoapp",
